@@ -14,5 +14,20 @@ package q2
 
 func ProblemsSolved(answers [][3]bool) int {
 	// Seu código aqui
-	return 0
+	count := 0
+	for i := 0; i < len(answers); i++ {
+		solved := 0
+		for j := 0; j < 3; j++ {
+			if answers[i][j] {
+				solved++
+			}
+
+			if solved >= 2 {
+				count++
+			}
+		}
+
+	}
+
+	return count
 }
