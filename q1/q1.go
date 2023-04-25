@@ -1,5 +1,11 @@
 package q1
 
+import (
+	"errors"
+	"fmt"
+	"reflect"
+)
+
 //Em um dia quente de verão, Pete e seu amigo Billy decidiram comprar uma melancia. Eles escolheram a maior e mais
 //saborosa, na opinião deles, e, em seguida, pesaram a fruta nas balanças, obtendo seu peso em quilos. Morrendo de sede,
 //correram para casa com a melancia e decidiram dividi-la. No entanto, enfrentaram um problema difícil.
@@ -13,7 +19,26 @@ package q1
 //A função deve retornar um valor booleano, indicando se é possível ou não dividir a melancia da forma desejada. Se o peso
 //da melancia for menor ou igual a 0, a função deve retornar um erro.
 
-func DivideWatermelon(weight int) (bool, error) {
+func numeroInteiro(value interface{}) bool {
+	kind := reflect.TypeOf(value).Kind()
+	return kind == reflect.Int || kind == reflect.Int8 || kind == reflect.Int16 || kind == reflect.Int32 || kind == reflect.Int64
+}
+func DivideWatermelon(peso int) (bool, error) {
 	// Seu código aqui
-	return false, nil
+	// não é um numero inteiro
+	if !numeroInteiro(peso) {
+		return false, errors.New("peso não é um número inteiro")
+	}
+
+	// divisão por 0 não é possível
+	if peso == 0 {
+		return false, errors.New("peso não pode ser zero")
+	}
+
+	restante := peso % 2
+	if restante >= 1 {
+		return false, errors.New("não é possivel dividir a melancia em pedaços iguais")
+	}
+	fmt.Printf("Sim, é possível dividir a melancia. O peso seria %d kg para cada pedaço\n", peso/2)
+	return true, nil
 }
